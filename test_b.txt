@@ -1,0 +1,6 @@
+d
+o
+empty/p1.jpg
+r
+simple_blur
+q

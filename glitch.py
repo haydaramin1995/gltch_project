@@ -10,7 +10,7 @@ from PIL import ImageDraw
 def make_blue(img, lowerBound, upperBound):
     assert(lowerBound < upperBound)
     assert(lowerBound > -1)
-    assert(upperBound < 257)
+    assert(upperBound < 256)
     draw = ImageDraw.Draw(img)
     for x in range(img.width):
         for y in range(img.height):
@@ -21,6 +21,43 @@ def make_blue(img, lowerBound, upperBound):
                 draw.point((x,y), fill=(pixel[0],pixel[2],bluePixel,255) )
     return img
 
+# REQUIRES: img is a valid instance of Image class, x and y are valid chordinates
+# DOES: inverts a specific pixel at x,y
+# TAKES: O(1)
+# RETURNS: N/A
+def invert_pixel(img,x,y):
+    draw = ImageDraw.Draw(img)
+    pixel = img.getpixel((x,y))
+    new_0 = 255 - pixel[0]
+    new_1 = 255 - pixel[1]
+    new_2 = 255 - pixel[2]
+    draw.point((x,y), fill=(new_0,new_1,new_2,255) )
+
+# REQUIRES: img is a valid instance of Image class
+# DOES: sorts through pixels in image, inverts each pixel
+# TAKES: O(N^2) each call
+# RETURNS: img that has been processed
+def invert(img):
+    draw = ImageDraw.Draw(img)
+    for x in range(img.width):
+        for y in range(img.height):
+            invert_pixel(img,x,y)
+    return img
+
+
+# REQUIRES: img is a valid instance of Image class
+# DOES:
+# TAKES: O(N^2)
+# RETURNS: img that has been processed
+def simple_blur(img):
+    draw = ImageDraw.Draw(img)
+    img_clone = img
+    sample_kernal_value = 0.111
+    for x in range(1,img.width-1):
+        for y in range(1,img.height-1):
+    
+    
+    return img_clone
 
 # TODO: test to see which image files we can open with it
 # REQUIRES: N/A
@@ -61,12 +98,20 @@ def display():
         if(user_choice == "r" or user_choice == "run" or user_choice == "R"):
             if(file_sucsessfully_opened):
                 print("blue filter:")
+                print("invert:")
+                print("simple blur:")
                 run_input = raw_input(" processing: ")
                 if(run_input == 'b'):
-                    make_blue(image_to_process, 10, 140)
+                    make_blue(image_to_process, 36, 177)
                     image_to_process.show()
-            else:
-                print("yo homie I am p sure u haven't opened a file so do that first")
+                if(run_input == 'i'):
+                    invert(image_to_process)
+                    image_to_process.show()
+                if(run_input == "simple_blur"):
+                    simple_blur(image_to_process)
+                    image_to_process.show()
+                else:
+                    print("yo homie I am p sure u haven't opened a file so do that first")
         if(user_choice == "q" or user_choice == "quit" or user_choice == "Q"):
             break
         if(user_choice == "d" or user_choice == "display" or user_choice == "D"):

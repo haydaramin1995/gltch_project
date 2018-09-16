@@ -1,3 +1,3 @@
 TODO:
 
-a. create a run my tests python program that preforms an end to end
+a. create a run my tests python program that preforms an end to endadd end to end tests python
