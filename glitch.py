@@ -55,8 +55,7 @@ def simple_blur(img):
     sample_kernal_value = 0.111
     for x in range(1,img.width-1):
         for y in range(1,img.height-1):
-    
-    
+            invert_pixel(img,x,y)
     return img_clone
 
 # TODO: test to see which image files we can open with it
