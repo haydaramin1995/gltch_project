@@ -2,6 +2,7 @@
 
 from PIL import Image
 from PIL import ImageDraw
+import random
 
 # REQUIRES: img is a valid instance of Image class
 # DOES: sorts through pixels in image, if in blue range we don't make it white
@@ -45,6 +46,7 @@ def invert(img):
     return img
 
 
+# implement later when you aren't hyper on coffee
 # REQUIRES: img is a valid instance of Image class
 # DOES:
 # TAKES: O(N^2)
@@ -52,11 +54,44 @@ def invert(img):
 def simple_blur(img):
     draw = ImageDraw.Draw(img)
     img_clone = img
-    sample_kernal_value = 0.111
     for x in range(1,img.width-1):
         for y in range(1,img.height-1):
-            invert_pixel(img,x,y)
+            print("TODO IMPLEMENT ME LATER")
     return img_clone
+
+# REQUIRES: img is a valid instance of Image class
+# DOES: calls extract pallate randomly with valid inputs
+# TAKES: O(1) where 1 is equal to 10
+# RETURNS: N/A
+def call_extract_pallate(img):
+    # run function 100 times
+    width = img.width
+    height = img.height
+    for i in range(8):
+        tl = random.randint(0,width-3)
+        tl %= img.height
+        tl %= img.width
+        tr = random.randint(tl+1,width-3)
+        bl = random.randint(tl+1,height-3)
+        extract_pallate(img,tl,tr,bl)
+
+# REQUIRES: img is a valid instance of Image class
+# tl = top_left, tr = top_right, bl = bottom_left, br = bottom_right
+# DOES:
+# TAKES: O(N^2)
+# RETURNS: list of 10 rgb tuples corresponding to a pallate from a photo
+def extract_pallate(img,tl,tr,bl):
+    assert(0 <= tl)
+    assert(tr <= img.width-1)
+    assert(bl <= img.height-1)
+    assert(tl < tr and tl < bl)
+    draw = ImageDraw.Draw(img)
+    img_clone = img
+    for x in range(tl,tr):
+        for y in range(tl,bl):
+            invert_pixel(img,x,y)
+    return img
+
 
 # TODO: test to see which image files we can open with it
 # REQUIRES: N/A
@@ -99,6 +134,7 @@ def display():
                 print("blue filter:")
                 print("invert:")
                 print("simple blur:")
+                print("extract pallate:")
                 run_input = raw_input(" processing: ")
                 if(run_input == 'b'):
                     make_blue(image_to_process, 36, 177)
@@ -108,6 +144,9 @@ def display():
                     image_to_process.show()
                 if(run_input == "simple_blur"):
                     simple_blur(image_to_process)
+                    image_to_process.show()
+                if(run_input == "extract"):
+                    call_extract_pallate(image_to_process)
                     image_to_process.show()
                 else:
                     print("yo homie I am p sure u haven't opened a file so do that first")

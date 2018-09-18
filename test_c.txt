@@ -1,0 +1,8 @@
+d
+o
+empty/p1.jpg
+r
+extract
+save
+target_photos/p1_clone.jpg
+q
